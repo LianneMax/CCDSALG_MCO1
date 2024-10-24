@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "slowsort.h"
+#include "sort.h"
 #define MAX 32768
 
 double polarAngle(Coord p1, Coord p2, Coord anchor)

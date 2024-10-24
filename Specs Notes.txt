@@ -67,6 +67,10 @@ Task #2: IMPLEMENT TWO SORTING ALGORITHMS
         b. The anchor point is the point with the lowest (minimum y coordinate).
         c. If there are several points with the same minimum y coordinate
             - choose the point with the lower x coodinate
+    4. Practice Modular programming
+        a. Compartamentalize the two algorithm sorting implementation under the following:
+            - sort.h
+            - sort.c
             
 Task #3: IMPLEMENT TWO VERSIONS OF GRAHAM'S SCAN ALGORITHM
     1. Implement Graham's Scan algorithm
