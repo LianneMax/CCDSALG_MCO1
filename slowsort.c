@@ -4,7 +4,7 @@
 
 double polarAngle(Coord p1, Coord p2, Coord anchor)
 {
-  // statement
+  // statement (idk the formula for polar angle )
 	// return value 
 } // not yet done
 
@@ -14,9 +14,10 @@ void selectSort(int n, Coord points[], Coord anchor)
 	Coord temp;
 	
 	for (i = 0; i < n-1; i++){
-		// unsure
+		low = i;
 		for (j = i+1; j < n; j++){
-			// unsure
+			if (polarAngle > 0)
+			low = j;
 			}
 	}	
 
