@@ -1,8 +1,51 @@
 INPUT
 1. The input is a text file that contains the following:
-    a. The 1st line is n
-        - This represents the input and problem size (the number of points).
-2. It's followed by n lines of data where each line contains two double data type values.
+2. The 1st line is n
+    a. This represents the input and problem size (the number of points).
+3. It's followed by n lines of data where each line contains two double data type values.
     a. This represents the x and y coordinates of the points.
         - One or more blank spaces separate the x and y coordinates.
         - The coordinates are NOT SORTED.
+    b. Refer to the sample input text files "sample-input.txt" and "input-circle.txt"
+        - sample-input.txt contains collinear points
+        - input-circle.txt contains points on a circle
+            - The circle has a radius of 2, whose centroid is at the origin 0, 0.
+4. STRICT REQUIREMENT #1
+    a. Make sure that your program will be able to store and process a maximum problem size of n = 2^15 = 32768 elements.
+
+
+OUTPUT
+1. The output is a text file that contains data about the convex hull.
+2. 1st line encodes m
+    a. This is the number of points in the convex hull.
+3. It's followed by m lines
+    a. Each line contains two double data type values.
+    b. These values represents the x and y coordinates of the points making up the convex hull.
+    c. One or more blank spaces separate the x and y coordinates.
+4. STRICT REQUIREMENT #2
+    a. The x, y coordinate values should be formatted such that there are 6 digits after the decimal point.
+    b. The points should be listed in the output text file such that:
+        - The first is the anchor
+        - Followed by the succeeding points such that when the points are connected
+        - They trace the convex in counterclockwise direction.
+
+
+TASKS
+Task #1: DESIGN AND IMPLEMENT YOUR STACK DATA STRUCTURE
+    1. Implement a stack data structure with the following operations:
+        a. CREATE(S)
+        b. PUSH(S, elem)
+        c. elem = POP(S)
+        d. elem = TOP(S)
+        e. ISFULL(S)
+        f. ISEMPTY(S)
+    2. VERY IMPORTANT
+        a. Implement as an additional stack operation elem = NEXT-TO-TOP(S)
+            - will return the element below the top element
+            - For Example:
+                1. Create a stack(s)
+                2. Then, push(S, 10)
+                3. Then, push(S, 20)
+                4. Then, push(S, 30)
+                5. Then, Tops(S) will return 40
+                6. Finally, NEXT-TO-TOP(S) will return 20
