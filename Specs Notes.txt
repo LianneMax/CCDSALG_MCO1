@@ -63,6 +63,29 @@ Task #2: IMPLEMENT TWO SORTING ALGORITHMS
         a. Selection Sort (Slow Algo)
         b. Heap Sort (Fast Algo)
     3. VERY IMPORTANT
-        a. The sorting is based on the polar angle made by the anchor point P0 with another point, say Pi.
-The anchor point is the point with the lowest (minimum y coordinate). If there are several points with the
-same minimum y coordinate, choose the point with the lower x coordinate.
+        a. The sorting is based on the polar angle made by the anchor point P0 with another point, Pi.
+        b. The anchor point is the point with the lowest (minimum y coordinate).
+        c. If there are several points with the same minimum y coordinate
+            - choose the point with the lower x coodinate
+            
+Task #3: IMPLEMENT TWO VERSIONS OF GRAHAM'S SCAN ALGORITHM
+    1. Implement Graham's Scan algorithm
+        - call the functions for sorting
+        - call the functions for stack operations
+    2. There should be two versions
+        - A Slow Sorting Algorithm (First Version)
+        - A Fast Sorting Algorithm (Second Version)
+    3. STRICT REQUIREMENT #4
+        - It should have a rintf() statement that displays the elapsed time
+            - Both versions should have this
+            - in milliseconds
+            - Between the start and end of the algorithm implementatione execution
+        - Make use of the empirical-time.c C program
+        - Learn how to compute for the elapsed time using the clock() library function
+    4. Practice Modular programming
+        - Solutions should be in two separate source files named:
+            a. graham_scan1.c (for the slow version)
+            b. graham_scan2.c (for the fast version)
+
+Task #4: IMPLEMENT TWO DRIVER PROGRAMS TO TEST THE TWO VERSIONS
+    1. 
