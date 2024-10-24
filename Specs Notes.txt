@@ -88,4 +88,24 @@ Task #3: IMPLEMENT TWO VERSIONS OF GRAHAM'S SCAN ALGORITHM
             b. graham_scan2.c (for the fast version)
 
 Task #4: IMPLEMENT TWO DRIVER PROGRAMS TO TEST THE TWO VERSIONS
-    1. 
+    1. Each driver program should have its own main() function that does the following:
+        a. Ask the user to input the following:
+            - Filename and extension of the input life
+        b. Ask the user to input the following:
+            - Filename and extension of the output life
+        c. Open the input text file using fopen() library function
+        d. Rwead the input text file using fscanf() library function
+        e. Call the Graham scan algorithm implementation
+        f. Write the m output points comprising the convex hull to the output text file using fprintf() function
+        g. close the input and output text files using the fclose() library function
+    2. Practice Modular programming
+        - The solution should be in two separate source files:
+            a. main1.c (for the slow version)
+            b. main2.c (for the fast version)
+
+Task #5: TEST YOUR SOLUTION
+    1. Make 5 test case text files with different values of n with a minimum of n = 2^6 = 64 points.
+    2. Set the values of n such that they are expressed using 2 as exponent (for example n = 2^8 = 256).
+    3. Each test case should be tested for both versions of the program.
+    4. Tabulate the elapsed time for each test case
+        - It will be used for the Analysis section for the proejct documentation.
