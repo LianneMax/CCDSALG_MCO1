@@ -1,6 +1,9 @@
-//stack.h
 #ifndef STACK_H
 #define STACK_H
+
+typedef struct Point {
+    double x, y;
+} Point;
 
 typedef struct Stack {
     Point* points;
