@@ -55,7 +55,9 @@ Task #1: DESIGN AND IMPLEMENT YOUR STACK DATA STRUCTURE
     3. STRICT REQUIREMENT #3
         a. The stack should be able to store up to a maximum of n = 2^15 = 32768 elements
     4. Practice modular programming.
-        a. The codes for stack data structure are stored in source files stack.h and stack.c
+        a. The codes for stack data structure are stored in the following source files:
+            - stack.h
+            - stack.c
 
 Task #2: IMPLEMENT TWO SORTING ALGORITHMS
     1. Sorting is crucial for Graham's Scan algorithm.
