@@ -1,0 +1,8 @@
+INPUT
+1. The input is a text file that contains the following:
+    a. The 1st line is n
+        - This represents the input and problem size (the number of points).
+2. It's followed by n lines of data where each line contains two double data type values.
+    a. This represents the x and y coordinates of the points.
+        - One or more blank spaces separate the x and y coordinates.
+        - The coordinates are NOT SORTED.
