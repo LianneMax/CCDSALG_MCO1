@@ -1,16 +1,22 @@
 #ifndef STACK_H
 #define STACK_H
 
-//typedef struct Point {
-//    double x, y;
-//} Point;
+#include <stdlib.h>
+#include <stdio.h>
 
-typedef struct Stack {
-    Coord* points;
-    int top;
-    int maxSize;
+// Define a structure for coordinates (points)
+typedef struct {
+    double x, y;
+} Coord;
+
+// Define a structure for the stack
+typedef struct {
+    Coord* points;  // Array to store points
+    int top;        // Index of the top element
+    int maxSize;    // Maximum stack size (up to 32,768)
 } Stack;
 
+// Stack operation declarations
 void createStack(Stack* s, int size);
 void push(Stack* s, Coord p);
 Coord pop(Stack* s);
@@ -20,3 +26,4 @@ int isEmpty(Stack* s);
 int isFull(Stack* s);
 
 #endif
+

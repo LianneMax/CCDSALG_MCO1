@@ -1,22 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "stack.h"
 #include "sort.h"
-#include <time.h>
 
+// Helper function to determine the orientation of three points
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     if (val == 0) return 0;               // Collinear points
-    return (val > 0) ? 1 : 2;              // Clockwise (1) or Counterclockwise (2)
+    return (val > 0) ? 1 : 2;             // Clockwise (1) or Counterclockwise (2)
 }
 
-void grahamScan2(Coord points[], int n) {
+// Graham's Scan function using Heap Sort for the fast version
+Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     if (n < 3) {
         printf("Convex hull is not possible with less than 3 points.\n");
-        return;
+        *hullSize = 0;
+        return NULL;
     }
 
-    // Find the point with the lowest y-coordinate
+    // Start the timer
+    clock_t start = clock();
+
+    // Find the point with the lowest y-coordinate (or lowest x-coordinate if tied)
     int minY = 0;
     for (int i = 1; i < n; i++) {
         if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
@@ -28,9 +34,9 @@ void grahamScan2(Coord points[], int n) {
     Coord temp = points[0];
     points[0] = points[minY];
     points[minY] = temp;
-
-    // Corrected Sort Call: Using `heapSort` with the proper anchor point `p0`
     Coord p0 = points[0];
+
+    // Sort points by polar angle using heap sort
     heapSort(points + 1, n - 1, p0);
 
     // Initialize the stack and add the first three points
@@ -48,21 +54,20 @@ void grahamScan2(Coord points[], int n) {
         push(&s, points[i]);
     }
 
-    // Write the result to the output file
-    FILE *outputFile = fopen("output2.txt", "w");
-    if (!outputFile) {
-        printf("Error opening output file.\n");
-        free(s.points);
-        return;
+    // Copy stack contents to an array for the result
+    *hullSize = s.top + 1;
+    Coord* hull = (Coord*)malloc((*hullSize) * sizeof(Coord));
+    for (int i = 0; i < *hullSize; i++) {
+        hull[i] = s.points[i];
     }
 
-    int m = s.top + 1;
-    fprintf(outputFile, "%d\n", m);  // Number of points in the convex hull
-    for (int i = 0; i < m; i++) {
-        fprintf(outputFile, "%.6lf %.6lf\n", s.points[i].x, s.points[i].y);
-    }
-    fclose(outputFile);
+    // End timer
+    clock_t end = clock();
+    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC * 1000;
+    printf("Time elapsed (Heap Sort): %.3lf ms\n", timeElapsed);
 
     // Free the stack memory
     free(s.points);
+
+    return hull;
 }

@@ -1,104 +1,75 @@
-#include <stdio.h>
 #include "sort.h"
-#define MAX 32768
+#include <math.h>
+#include <stdio.h> // For standard I/O functions
 
-double polarAngle(Coord p1, Coord p2, Coord anchor)
-{
-  	double polarAngleValue = (p1.x - anchor.x) * (p2.y - anchor.y) - (p1.y - anchor.y) * (p2.x - anchor.x);
-	double q1 = (p1.x - anchor.x) * (p1.x - anchor.x) + (p1.y - anchor.y) * (p1.y - anchor.y);
-        double q2 = (p2.x - anchor.x) * (p2.x - anchor.x) + (p2.y - anchor.y) * (p2.y - anchor.y);
-	
-	if (polarAngleValue > 0) 
-	{
-		return 1;
-	}
-	else if (polarAngleValue < 0)
-	{
-		return -1;
-	}
-	else if (q1 < q2) //polarAngleValue = 0
-	{
-		return 1; 
-	}
-        else if (q1 > q2)
-	{
-		return -1;  
-	}	
-	else if (p1.x < p2.x)
-	{
-		return 1;
-	}
-	else if (p1.x > p2.x)
-	{
-		return -1;
-	}
-	else
-	{
-		return 0;
-	}
-} //pls fix the syntax errors
+// Helper function to calculate the polar angle between a point and the anchor
+double polarAngle(Coord p1, Coord anchor) {
+    return atan2(p1.y - anchor.y, p1.x - anchor.x);
+}
 
-//slow sort
-void selectSort(int n, Coord points[], Coord anchor)
-{
-	int i, j, low;
-	Coord temp;
-	
-	for (i = 0; i < n-1; i++){
-		low = i;
-		for (j = i+1; j < n; j++){
-			if (polarAngle > 0)
-			low = j;
-			}
-	}	
+// Slow Sorting Algorithm: Selection Sort
+void selectSort(int n, Coord points[], Coord anchor) {
+    int i, j, minIdx;
+    Coord temp;
 
-  // select sort algo  
-	temp = points[i];
-	points[i] = points[low];
-	points[low] = temp;	
-} // done 
+    for (i = 0; i < n - 1; i++) {
+        minIdx = i;
+        for (j = i + 1; j < n; j++) {
+            // Compare points based on polar angle with respect to the anchor
+            if (polarAngle(points[j], anchor) < polarAngle(points[minIdx], anchor)) {
+                minIdx = j;
+            }
+        }
+        // Swap the found minimum element with the first element
+        temp = points[i];
+        points[i] = points[minIdx];
+        points[minIdx] = temp;
+    }
+}
 
-//fast sort (heap sort)
+// Swap function used by heap sort
 void swap(Coord* a, Coord* b) {
     Coord temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void heapify(Coord points[], int n, int i, Coord p0) {
+// Heapify function for Heap Sort
+void heapify(Coord points[], int n, int i, Coord anchor) {
     int largest = i;        // Initialize largest as root
     int left = 2 * i + 1;   // Left child
     int right = 2 * i + 2;  // Right child
 
-    // Compare left child with the root based on polar angle
-    if (left < n && polarAngle(p0, points[left], p0) > polarAngle(p0, points[largest], p0)) {
+    // If left child is larger based on polar angle
+    if (left < n && polarAngle(points[left], anchor) > polarAngle(points[largest], anchor)) {
         largest = left;
     }
 
-    // Compare right child with the largest element
-    if (right < n && polarAngle(p0, points[right], p0) > polarAngle(p0, points[largest], p0)) {
+    // If right child is larger based on polar angle
+    if (right < n && polarAngle(points[right], anchor) > polarAngle(points[largest], anchor)) {
         largest = right;
     }
 
-    // If the largest is not the root, swap and continue heapifying
+    // If largest is not root, swap and heapify recursively
     if (largest != i) {
         swap(&points[i], &points[largest]);
-        heapify(points, n, largest, p0);
+        heapify(points, n, largest, anchor);
     }
 }
 
-void heapSort(Coord points[], int n, Coord p0) {
-    // Build the heap (rearrange the array)
+// Fast Sorting Algorithm: Heap Sort
+void heapSort(Coord points[], int n, Coord anchor) {
+    // Build the heap
     for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify(points, n, i, p0);
+        heapify(points, n, i, anchor);
     }
 
-    // Extract elements from the heap one by one
-    for (int i = n - 1; i >= 0; i--) {
-        // Move current root to end
+    // Extract elements from the heap
+    for (int i = n - 1; i > 0; i--) {
+        // Move the root of the heap to the end
         swap(&points[0], &points[i]);
 
         // Call heapify on the reduced heap
-        heapify(points, i, 0, p0);
+        heapify(points, i, 0, anchor);
     }
 }

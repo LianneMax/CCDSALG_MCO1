@@ -1,14 +1,12 @@
-#define STACK_H    // Define STACK_H if it isn't defined
-#define MAX 32768
+#ifndef SORT_H
+#define SORT_H
 
-#include <stdio.h>
-#include "stack.h"
 
-typedef struct 
-{
-	double x, y;
-} Coord;
+#include "stack.h" // Include the stack header for Coord type
 
-double polarAngle(Coord p1, Coord p2, Coord anchor);
+// Function declarations
 void selectSort(int n, Coord points[], Coord anchor);
-void heapSort( points[], int n, Coord p0);
+void heapSort(Coord points[], int n, Coord anchor);
+double polarAngle(Coord p1, Coord anchor);
+
+#endif
