@@ -26,7 +26,7 @@ void selectSort(int n, Coord points[], Coord anchor)
 	temp = points[i];
 	points[i] = points[low];
 	points[low] = temp;	
-} // not yet done 
+} // done 
 
 //fast sort
 //heap sort
