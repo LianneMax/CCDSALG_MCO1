@@ -20,7 +20,7 @@ void selectSort(int n, Coord points[], Coord anchor) {
     for (i = 0; i < n - 1; i++) {
         minIdx = i;
         for (j = i + 1; j < n; j++) {
-            if (compareByPolarAngle(&points[j], &points[minIdx], anchor) < 0) {
+            if (compareByPolarAngle(&points[j], &points[minIdx], anchor) > 0) {
                 minIdx = j;
             }
         }
