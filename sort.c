@@ -4,9 +4,9 @@
 
 double polarAngle(Coord p1, Coord p2, Coord anchor)
 {
-  // statement (idk the formula for polar angle )
-	// return value 
-} // not yet done
+  	int polarAngleValue = (p1.x - anchor.x) * (p2.y - anchor.y) - (p1.y - anchor.y) * (p2.x - anchor.x);
+	return polarAngleValue;
+} // done
 
 //slow sort
 void selectSort(int n, Coord points[], Coord anchor)
