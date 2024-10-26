@@ -26,7 +26,7 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
 
     // Find the point with the lowest y-coordinate (or lowest x-coordinate if tied)
     int minY = 0;
-    for (i = 1; i < n; i++) {  // Use 'i' from the beginning of the function
+    for (i = 1; i < n; i++) {
         if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
             minY = i;
         }
@@ -49,26 +49,29 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     push(&s, points[2]);
 
     // Process remaining points
-    for (i = 3; i < n; i++) {  // Reuse 'i' here
-        while (orientation(nextToTop(&s), top(&s), points[i]) != 2) {
+    for (i = 3; i < n; i++) {
+        // Ensure there are at least 2 elements on the stack before calling nextToTop
+        while (s.top >= 1 && orientation(nextToTop(&s), top(&s), points[i]) != 2) {
             pop(&s);
         }
         push(&s, points[i]);
     }
 
+    // Copy stack contents to an array for the result
     *hullSize = s.top + 1;
     Coord* hull = (Coord*)malloc((*hullSize) * sizeof(Coord));
-    for (i = 0; i < *hullSize; i++) {  // Reuse 'i' here again
+    for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
 
     // End timer
     clock_t end = clock();
-    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC * 1000;
-    printf("Time elapsed (Heap Sort): %.3lf ms\n", timeElapsed);
+    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Heap Sort took: %.6f seconds\n", timeElapsed);
 
     // Free the stack memory
     free(s.points);
 
     return hull;
 }
+
