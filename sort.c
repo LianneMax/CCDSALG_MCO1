@@ -52,8 +52,7 @@ void selectSort(int n, Coord points[], Coord anchor)
 	points[low] = temp;	
 } // done 
 
-//fast sort
-//heap sort
+//fast sort (heap sort)
 void swap(Coord* a, Coord* b) {
     Coord temp = *a;
     *a = *b;

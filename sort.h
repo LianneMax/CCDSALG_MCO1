@@ -1,6 +1,7 @@
 #define STACK_H    // Define STACK_H if it isn't defined
+#define MAX 32768
+
 #include <stdio.h>
-#define MAX 37268
 #include "stack.h"
 
 typedef struct 
