@@ -17,25 +17,24 @@ double polarAngle(Coord p1, Coord p2, Coord anchor)
 	{
 		return -1;
 	}
-	else  //polarAngleValue = 0
+	else if (q1 < q2) //polarAngleValue = 0
 	{
-	if (q1 < q2) 
-	{
-		return 1;   
+		return 1; 
 	}
-        if (q1 > q2)
+        else if (q1 > q2)
 	{
 		return -1;  
 	}	
-	if (p1.x < p2.x)
+	else if (p1.x < p2.x)
 	{
 		return 1;
 	}
-	if (p1.x > p2.x)
+	else if (p1.x > p2.x)
 	{
 		return -1;
 	}
 	else
+	{
 		return 0;
 	}
 } //pls fix the syntax errors
