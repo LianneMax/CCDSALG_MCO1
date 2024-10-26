@@ -11,4 +11,4 @@ typedef struct
 
 double polarAngle(Coord p1, Coord p2, Coord anchor);
 void selectSort(int n, Coord points[], Coord anchor);
-void heapSort(Coord points[], int n, Coord p0);
+void heapSort( points[], int n, Coord p0);

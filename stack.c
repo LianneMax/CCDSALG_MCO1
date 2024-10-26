@@ -2,28 +2,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
+#include "sort.h"
 
 void createStack(Stack* s, int size) {
-    s->points = (Point*)malloc(size * sizeof(Point));
+    s->points = (Coord*)malloc(size * sizeof(Coord));
     s->top = -1;
     s->maxSize = size;
 }
 
-void push(Stack* s, Point p) {
+void push(Stack* s, Coord p) {
     if (!isFull(s)) {
         s->points[++(s->top)] = p;
     }
 }
 
-Point pop(Stack* s) {
+Coord pop(Stack* s) {
     return s->points[(s->top)--];
 }
 
-Point top(Stack* s) {
+Coord top(Stack* s) {
     return s->points[s->top];
 }
 
-Point nextToTop(Stack* s) {
+Coord nextToTop(Stack* s) {
     return s->points[s->top - 1];
 }
 

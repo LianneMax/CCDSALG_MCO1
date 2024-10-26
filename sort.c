@@ -30,7 +30,7 @@ double polarAngle(Coord p1, Coord p2, Coord anchor)
 	}	
 	return p1.x - p2.x;	
 	}
-} // done
+} //pls fix the syntax errors
 
 //slow sort
 void selectSort(int n, Coord points[], Coord anchor)
@@ -60,17 +60,17 @@ void swap(Coord* a, Coord* b) {
 }
 
 void heapify(Coord points[], int n, int i, Coord p0) {
-    int largest = i;  // Initialize largest as root
-    int left = 2 * i + 1;  // left child
-    int right = 2 * i + 2; // right child
+    int largest = i;        // Initialize largest as root
+    int left = 2 * i + 1;   // Left child
+    int right = 2 * i + 2;  // Right child
 
     // Compare left child with the root based on polar angle
-    if (left < n && polarAngle(p0, points[left]) > polarAngle(p0, points[largest])) {
+    if (left < n && polarAngle(p0, points[left], p0) > polarAngle(p0, points[largest], p0)) {
         largest = left;
     }
 
     // Compare right child with the largest element
-    if (right < n && polarAngle(p0, points[right]) > polarAngle(p0, points[largest])) {
+    if (right < n && polarAngle(p0, points[right], p0) > polarAngle(p0, points[largest], p0)) {
         largest = right;
     }
 
