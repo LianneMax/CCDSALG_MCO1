@@ -4,10 +4,10 @@
 
 double polarAngle(Coord p1, Coord p2, Coord anchor)
 {
-	int q1, q2;
+
   	int polarAngleValue = (p1.x - anchor.x) * (p2.y - anchor.y) - (p1.y - anchor.y) * (p2.x - anchor.x);
-	q1 = (p1.x - anchor.x) * (p1.x - anchor.x) + (p1.y - anchor.y) * (p1.y - anchor.y);
-        q2 = (p2.x - anchor.x) * (p2.x - anchor.x) + (p2.y - anchor.y) * (p2.y - anchor.y);
+	int q1 = (p1.x - anchor.x) * (p1.x - anchor.x) + (p1.y - anchor.y) * (p1.y - anchor.y);
+        int q2 = (p2.x - anchor.x) * (p2.x - anchor.x) + (p2.y - anchor.y) * (p2.y - anchor.y);
 	
 	if (polarAngleValue > 0) 
 	{
