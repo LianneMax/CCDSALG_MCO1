@@ -11,18 +11,19 @@ int orientation(Coord p, Coord q, Coord r) {
 }
 
 Coord* grahamScan1(Coord points[], int n, int* hullSize) {
+    int i;
+
     if (n < 3) {
         printf("Convex hull is not possible with less than 3 points.\n");
         *hullSize = 0;
         return NULL;
     }
 
-    // Start timer
     clock_t start = clock();
 
-    // Find the point with the lowest y-coordinate
+    // Find the point with the lowest y-coordinate (or lowest x-coordinate if tied)
     int minY = 0;
-    for (int i = 1; i < n; i++) {
+    for (i = 1; i < n; i++) {
         if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
             minY = i;
         }
@@ -45,28 +46,24 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     push(&s, points[2]);
 
     // Process remaining points
-    for (int i = 3; i < n; i++) {
-        while (orientation(nextToTop(&s), top(&s), points[i]) != 2) {
+    for (i = 3; i < n; i++) {
+        while (s.top >= 1 && orientation(nextToTop(&s), top(&s), points[i]) != 2) {
             pop(&s);
         }
         push(&s, points[i]);
     }
 
-    // Copy stack contents to an array for the result
     *hullSize = s.top + 1;
     Coord* hull = (Coord*)malloc((*hullSize) * sizeof(Coord));
-    for (int i = 0; i < *hullSize; i++) {
+    for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
 
     // End timer
     clock_t end = clock();
-    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC * 1000;
-    printf("Time elapsed (Selection Sort): %.3lf ms\n", timeElapsed);
+    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Selection Sort took: %.6lf seconds\n", timeElapsed);
 
-    // Free the stack memory
     free(s.points);
-
     return hull;
 }
-

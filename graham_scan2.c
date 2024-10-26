@@ -13,6 +13,8 @@ int orientation(Coord p, Coord q, Coord r) {
 
 // Graham's Scan function using Heap Sort for the fast version
 Coord* grahamScan2(Coord points[], int n, int* hullSize) {
+    int i;  // Declare 'i' at the beginning of the function
+
     if (n < 3) {
         printf("Convex hull is not possible with less than 3 points.\n");
         *hullSize = 0;
@@ -24,7 +26,7 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
 
     // Find the point with the lowest y-coordinate (or lowest x-coordinate if tied)
     int minY = 0;
-    for (int i = 1; i < n; i++) {
+    for (i = 1; i < n; i++) {  // Use 'i' from the beginning of the function
         if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
             minY = i;
         }
@@ -47,17 +49,16 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     push(&s, points[2]);
 
     // Process remaining points
-    for (int i = 3; i < n; i++) {
+    for (i = 3; i < n; i++) {  // Reuse 'i' here
         while (orientation(nextToTop(&s), top(&s), points[i]) != 2) {
             pop(&s);
         }
         push(&s, points[i]);
     }
 
-    // Copy stack contents to an array for the result
     *hullSize = s.top + 1;
     Coord* hull = (Coord*)malloc((*hullSize) * sizeof(Coord));
-    for (int i = 0; i < *hullSize; i++) {
+    for (i = 0; i < *hullSize; i++) {  // Reuse 'i' here again
         hull[i] = s.points[i];
     }
 

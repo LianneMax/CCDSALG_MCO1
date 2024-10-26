@@ -2,7 +2,6 @@
 #define STACK_H
 
 #include <stdlib.h>
-#include <stdio.h>
 
 // Define a structure for coordinates (points)
 typedef struct {

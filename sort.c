@@ -1,22 +1,26 @@
 #include "sort.h"
-#include <math.h>
 #include <stdio.h> // For standard I/O functions
 
-// Helper function to calculate the polar angle between a point and the anchor
-double polarAngle(Coord p1, Coord anchor) {
-    return atan2(p1.y - anchor.y, p1.x - anchor.x);
+// Helper function to compare points based on cross product (avoiding atan2)
+int compareByPolarAngle(const Coord* p1, const Coord* p2, Coord anchor) {
+    double cross_product = (p1->x - anchor.x) * (p2->y - anchor.y) - (p1->y - anchor.y) * (p2->x - anchor.x);
+    if (cross_product > 0) return -1;    // p1 is counterclockwise to p2
+    if (cross_product < 0) return 1;     // p2 is counterclockwise to p1
+    // If collinear, sort by distance to the anchor
+    double dist1 = (p1->x - anchor.x) * (p1->x - anchor.x) + (p1->y - anchor.y) * (p1->y - anchor.y);
+    double dist2 = (p2->x - anchor.x) * (p2->x - anchor.x) + (p2->y - anchor.y) * (p2->y - anchor.y);
+    return dist1 < dist2 ? -1 : 1;
 }
 
-// Slow Sorting Algorithm: Selection Sort
+// Slow Sorting Algorithm: Selection Sort (using cross product)
 void selectSort(int n, Coord points[], Coord anchor) {
-    int i, j, minIdx;
+    int i, j, minIdx;  // Declare variables outside the loop
     Coord temp;
 
     for (i = 0; i < n - 1; i++) {
         minIdx = i;
         for (j = i + 1; j < n; j++) {
-            // Compare points based on polar angle with respect to the anchor
-            if (polarAngle(points[j], anchor) < polarAngle(points[minIdx], anchor)) {
+            if (compareByPolarAngle(&points[j], &points[minIdx], anchor) < 0) {
                 minIdx = j;
             }
         }
@@ -34,42 +38,39 @@ void swap(Coord* a, Coord* b) {
     *b = temp;
 }
 
-// Heapify function for Heap Sort
+// Heapify function for Heap Sort (using cross product comparison)
 void heapify(Coord points[], int n, int i, Coord anchor) {
     int largest = i;        // Initialize largest as root
     int left = 2 * i + 1;   // Left child
     int right = 2 * i + 2;  // Right child
 
-    // If left child is larger based on polar angle
-    if (left < n && polarAngle(points[left], anchor) > polarAngle(points[largest], anchor)) {
+    if (left < n && compareByPolarAngle(&points[left], &points[largest], anchor) < 0) {
         largest = left;
     }
 
-    // If right child is larger based on polar angle
-    if (right < n && polarAngle(points[right], anchor) > polarAngle(points[largest], anchor)) {
+    if (right < n && compareByPolarAngle(&points[right], &points[largest], anchor) < 0) {
         largest = right;
     }
 
-    // If largest is not root, swap and heapify recursively
     if (largest != i) {
         swap(&points[i], &points[largest]);
         heapify(points, n, largest, anchor);
     }
 }
 
-// Fast Sorting Algorithm: Heap Sort
+// Fast Sorting Algorithm: Heap Sort (using cross product)
 void heapSort(Coord points[], int n, Coord anchor) {
+    int i;  // Declare 'i' here for both loops
+
     // Build the heap
-    for (int i = n / 2 - 1; i >= 0; i--) {
+    for (i = n / 2 - 1; i >= 0; i--) {  // Use 'i' declared above
         heapify(points, n, i, anchor);
     }
 
     // Extract elements from the heap
-    for (int i = n - 1; i > 0; i--) {
-        // Move the root of the heap to the end
+    for (i = n - 1; i > 0; i--) {  // Reuse 'i'
         swap(&points[0], &points[i]);
-
-        // Call heapify on the reduced heap
         heapify(points, i, 0, anchor);
     }
 }
+
