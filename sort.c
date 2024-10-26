@@ -20,11 +20,11 @@ double polarAngle(Coord p1, Coord p2, Coord anchor)
 		q1 = (p1.x - anchor.x) * (p1.x - anchor.x) + (p1.y - anchor.y) * (p1.y - anchor.y);
         	q2 = (p2.x - anchor.x) * (p2.x - anchor.x) + (p2.y - anchor.y) * (p2.y - anchor.y);
 
-	if (dist1 < dist2) 
+	if (q1 < q2) 
 	{
 		return 1;   
 	}
-        if (dist1 > dist2)
+        if (q1 > q2)
 	{
 		return -1;  
 	}	
