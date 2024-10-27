@@ -59,11 +59,13 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
         hull[i] = s.points[i];
     }
 
-    // End timer
+    // End timer and display elapsed time
     clock_t end = clock();
     double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Selection Sort took: %.6lf seconds\n", timeElapsed);
 
+    //Free Stack Memory
     free(s.points);
+
     return hull;
 }

@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     fclose(input);
 
     int hullSize;
-    Coord* hull = grahamScan2(points, n, &hullSize);
+    Coord* hull = grahamScan2(points, n, &hullSize); //calls graham_scan2.c
 
     FILE* output = fopen(outputFile, "w");
     if (!output) {
