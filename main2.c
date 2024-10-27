@@ -25,7 +25,11 @@ int main(int argc, char *argv[]) {
     }
 
     int n;
-    fscanf(input, "%d", &n);
+    if (fscanf(input, "%d", &n) != 1) {
+        printf("Error reading the number of points.\n");
+        fclose(input);
+        return 1;
+    }
 
     Coord* points = (Coord*)malloc(n * sizeof(Coord));
     if (points == NULL) {
@@ -34,9 +38,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    for (i = 0; i < n; i++) {  // Use the pre-declared 'i'
-        fscanf(input, "%lf %lf", &points[i].x, &points[i].y);
+    for (i = 0; i < n; i++) {
+        if (fscanf(input, "%lf %lf", &points[i].x, &points[i].y) != 2) {
+            printf("Error reading coordinates for point %d.\n", i);
+            free(points);
+            fclose(input);
+            return 1;
+        }
     }
+
     fclose(input);
 
     int hullSize;
@@ -51,7 +61,7 @@ int main(int argc, char *argv[]) {
     }
 
     fprintf(output, "%d\n", hullSize);
-    for (i = 0; i < hullSize; i++) {  // Reuse 'i'
+    for (i = 0; i < hullSize; i++) {
         fprintf(output, "%.6lf %.6lf\n", hull[i].x, hull[i].y);
     }
 

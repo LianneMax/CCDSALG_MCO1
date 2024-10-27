@@ -73,4 +73,3 @@ void heapSort(Coord points[], int n, Coord anchor) {
         heapify(points, i, 0, anchor);
     }
 }
-
