@@ -7,6 +7,5 @@
 // Function declarations
 void selectSort(int n, Coord points[], Coord anchor);
 void heapSort(Coord points[], int n, Coord anchor);
-double polarAngle(Coord p1, Coord anchor);
 
 #endif

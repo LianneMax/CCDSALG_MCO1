@@ -1,3 +1,4 @@
+//graham_scan1.c = slow sort [selection sort]
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,8 +7,8 @@
 
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-    if (val == 0) return 0;               // Collinear points
-    return (val > 0) ? 1 : 2;              // Clockwise (1) or Counterclockwise (2)
+    if (val == 0) return 0; // Collinear points
+    return (val > 0) ? 1 : 2; // Clockwise (1) or Counterclockwise (2)
 }
 
 Coord* grahamScan1(Coord points[], int n, int* hullSize) {
@@ -19,9 +20,10 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
         return NULL;
     }
 
+    // Start timing for selection sort
     clock_t start = clock();
 
-    // Find the point with the lowest y-coordinate (or lowest x-coordinate if tied)
+    // Find the point with the lowest y-coordinate
     int minY = 0;
     for (i = 1; i < n; i++) {
         if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
@@ -37,6 +39,10 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
 
     // Sort points by polar angle using selection sort
     selectSort(n, points, p0);
+
+    // End timing for selection sort and print the elapsed time
+    double timeElapsed = (double)(clock() - start) / CLOCKS_PER_SEC;
+    printf("Selection Sort took: %.6lf seconds\n", timeElapsed);
 
     // Initialize the stack and add the first three points
     Stack s;
@@ -59,13 +65,6 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
         hull[i] = s.points[i];
     }
 
-    // End timer and display elapsed time
-    clock_t end = clock();
-    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Selection Sort took: %.6lf seconds\n", timeElapsed);
-
-    //Free Stack Memory
-    free(s.points);
-
+    free(s.points); // Free stack memory
     return hull;
 }
