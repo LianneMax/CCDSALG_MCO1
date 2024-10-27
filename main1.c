@@ -61,4 +61,3 @@ int main(int argc, char *argv[]) {
     printf("Convex hull written to %s\n", outputFile);
     return 0;
 }
-

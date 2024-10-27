@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
+#include "sort.h"
 
 // Declare grahamScan2 so that main2.c can call it
 Coord* grahamScan2(Coord points[], int n, int* hullSize);
@@ -9,7 +10,8 @@ int main(int argc, char *argv[]) {
     int i;  // Declare 'i' at the beginning of the function
 
     if (argc != 3) {
-        printf("Usage: %s <input file> <output file>\n", argv[0]);
+        printf("Usage: %s\n", argv[0]);
+        printf("Provide input and output file names.");
         return 1;
     }
 
