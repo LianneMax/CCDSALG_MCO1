@@ -12,7 +12,7 @@ int orientation(Coord p, Coord q, Coord r) {
 }
 
 Coord* grahamScan1(Coord points[], int n, int* hullSize) {
-    int i;
+int i;
 
     if (n < 3) {
         printf("Convex hull is not possible with less than 3 points.\n");
