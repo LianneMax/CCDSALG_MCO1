@@ -7,7 +7,7 @@
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     if (val == 0) return 0;               // Collinear points
-    return (val > 0) ? 1 : 2;              // Clockwise (1) or Counterclockwise (2)
+    return (val > 0) ? 1 : 2;             // Clockwise (1) or Counterclockwise (2)
 }
 
 Coord* grahamScan1(Coord points[], int n, int* hullSize) {
