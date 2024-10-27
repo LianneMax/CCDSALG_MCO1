@@ -8,9 +8,17 @@
 // Function to determine the orientation of three points
 // Returns 0 if points are collinear, 1 if clockwise, 2 if counterclockwise
 int orientation(Coord p, Coord q, Coord r) {
+    // Calculate the cross product to determine orientation
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-    if (val == 0) return 0;
-    return (val > 0) ? 1 : 2;
+
+    // Return 0 if collinear, 1 if clockwise, or 2 if counterclockwise
+    if (val == 0) {
+        return 0;  // Collinear
+    } else if (val > 0) {
+        return 1;  // Clockwise
+    } else {
+        return 2;  // Counterclockwise
+    }
 }
 
 // Graham's Scan using Selection Sort
