@@ -1,20 +1,24 @@
+// graham_scan2.c - Graham's Scan with Heap Sort (Fast Version)
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "stack.h"
 #include "sort.h"
 
-// Orientation function to determine orientation of three points
+// Function to determine the orientation of three points
+// Returns 0 if points are collinear, 1 if clockwise, 2 if counterclockwise
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     return (val == 0) ? 0 : (val > 0) ? 1 : 2;
 }
 
-// Graham's Scan function using Heap Sort for the fast version
+// Graham's Scan using Heap Sort
 Coord* grahamScan2(Coord points[], int n, int* hullSize) {
-    int i, x; // Declare loop variables here
+    int i, x;
 
+    // Check if there are enough points to form a convex hull
     if (n < 3) {
+        printf("Convex hull is not possible with less than 3 points.\n");
         *hullSize = 0;
         return NULL;
     }
@@ -30,27 +34,27 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
         }
     }
 
-    // Step 2: Place the anchor point at the beginning (swap with the first element)
+    // Move the anchor point to the first position
     Coord temp = points[0];
     points[0] = points[minY];
     points[minY] = temp;
     Coord p0 = points[0];
 
-    // Step 3: Sort the points by polar angle with respect to the anchor using heap sort
+    // Step 2: Sort points by polar angle using heap sort
     heapSort(points + 1, n - 1, p0);
 
-    // End timing for heap sort and print elapsed time
+    // End timing and print elapsed time
     double timeElapsed = (double)(clock() - start) / CLOCKS_PER_SEC;
     printf("Heap Sort took: %.6lf seconds\n", timeElapsed);
 
-    // Step 4: Initialize the stack and push the first three points
+    // Step 3: Initialize the stack and add the first three points
     Stack s;
     createStack(&s, n);
     push(&s, points[0]);
     push(&s, points[1]);
     push(&s, points[2]);
 
-    // Step 5: Process the remaining points
+    // Step 4: Process remaining points to construct the convex hull
     for (x = 3; x < n; x++) {
         while (s.top >= 1 && orientation(nextToTop(&s), top(&s), points[x]) != 2) {
             pop(&s);
@@ -58,18 +62,18 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
         push(&s, points[x]);
     }
 
-    // Step 6: Copy stack contents to an array for the result
+    // Step 5: Copy the stack contents to the result array for the convex hull
     *hullSize = s.top + 1;
     Coord* hull = (Coord*)malloc((*hullSize) * sizeof(Coord));
     for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
 
-    // Free stack memory
+    // Free stack memory and return the hull
     free(s.points);
-
     return hull;
 }
+
 
 
 
