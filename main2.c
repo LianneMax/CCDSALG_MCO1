@@ -72,10 +72,11 @@ int main(int argc, char *argv[]) {
     // Write the number of points in the convex hull to the first line of the output file
     fprintf(output, "%d\n", hullSize);
 
-    // Write each point in the convex hull to the output file, with 6 decimal places
+    // Write each point in the convex hull to the output file with aligned decimals
     for (i = 0; i < hullSize; i++) {
-        fprintf(output, "%.6lf %.6lf\n", hull[i].x, hull[i].y);
+        fprintf(output,"%10.6lf  %10.6lf\n", hull[i].x, hull[i].y); // Fixed width for alignment
     }
+
 
     // Close the output file after writing all points
     fclose(output);

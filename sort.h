@@ -15,4 +15,4 @@ void selectSort(int n, Coord points[], Coord anchor);
 // of Graham's Scan.
 void heapSort(Coord points[], int n, Coord anchor);
 
-#endif // End of SORT_H
+#endif

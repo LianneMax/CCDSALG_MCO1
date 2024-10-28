@@ -51,6 +51,6 @@ int isEmpty(Stack* s);
 // Returns: 1 if stack is full, 0 otherwise
 int isFull(Stack* s);
 
-#endif // End of STACK_H
+#endif
 
 

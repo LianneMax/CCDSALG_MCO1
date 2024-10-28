@@ -38,7 +38,6 @@ int compareByPolarAngle(const Coord* p1, const Coord* p2, Coord anchor) {
 // Sorts points based on polar angle relative to an anchor point using selection sort.
 void selectSort(int n, Coord points[], Coord anchor) {
     int i, j, minIdx;  // Loop variables
-    Coord temp; // Temporary variable for swapping points
 
     for (i = 0; i < n - 1; i++) {
         minIdx = i;  // Start with the current element as the minimum
@@ -50,12 +49,6 @@ void selectSort(int n, Coord points[], Coord anchor) {
         }
 
         swap(&points[i], &points[minIdx]);
-        /*
-        // Swap the found minimum element with the current element
-        temp = points[i];
-        points[i] = points[minIdx];
-        points[minIdx] = temp;
-        */
     }
 }
 /*
