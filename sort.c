@@ -1,6 +1,13 @@
 #include "sort.h"
 #include <stdio.h> // For standard I/O functions
 
+
+// Helper function to swap two points
+void swap(Coord* a, Coord* b) {
+    Coord temp = *a;
+    *a = *b;
+    *b = temp;
+}
 // Helper function to compare points based on cross product (avoiding atan2)
 // Determines the order of points relative to an anchor point.
 // Returns -1 if p1 is counterclockwise to p2, 1 if clockwise, 0 if collinear.
@@ -41,20 +48,24 @@ void selectSort(int n, Coord points[], Coord anchor) {
                 minIdx = j;
             }
         }
+
+        swap(&points[i], &points[minIdx);
+        /*
         // Swap the found minimum element with the current element
         temp = points[i];
         points[i] = points[minIdx];
         points[minIdx] = temp;
+        */
     }
 }
-
+/*
 // Helper function to swap two points
 void swap(Coord* a, Coord* b) {
     Coord temp = *a;
     *a = *b;
     *b = temp;
 }
-
+*/
 // Heapify function for Heap Sort
 // Ensures the max-heap property is maintained by comparing parent and child nodes based on polar angle
 void heapify(Coord points[], int n, int i, Coord anchor) {
