@@ -49,7 +49,7 @@ void selectSort(int n, Coord points[], Coord anchor) {
             }
         }
 
-        swap(&points[i], &points[minIdx);
+        swap(&points[i], &points[minIdx]);
         /*
         // Swap the found minimum element with the current element
         temp = points[i];
