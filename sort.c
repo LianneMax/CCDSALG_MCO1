@@ -63,12 +63,12 @@ void heapify(Coord points[], int n, int i, Coord anchor) {
     int right = 2 * i + 2;  // Index of right child
 
     // Compare root with left child and update largest if left child is greater
-    if (left < n && compareByPolarAngle(&points[left], &points[largest], anchor) < 0) {
+    if (left < n && compareByPolarAngle(&points[left], &points[largest], anchor) > 0) {
         largest = left;
     }
 
     // Compare largest with right child and update if right child is greater
-    if (right < n && compareByPolarAngle(&points[right], &points[largest], anchor) < 0) {
+    if (right < n && compareByPolarAngle(&points[right], &points[largest], anchor) > 0) {
         largest = right;
     }
 
