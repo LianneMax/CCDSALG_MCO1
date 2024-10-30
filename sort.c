@@ -1,5 +1,5 @@
 #include "sort.h"
-#include <stdio.h> // For standard I/O functions
+#include <stdio.h>
 
 
 // Helper function to swap two points
@@ -8,7 +8,7 @@ void swap(Coord* a, Coord* b) {
     *a = *b;
     *b = temp;
 }
-// Helper function to compare points based on cross product (avoiding atan2)
+
 // Determines the order of points relative to an anchor point.
 // Returns -1 if p1 is counterclockwise to p2, 1 if clockwise, 0 if collinear.
 int compareByPolarAngle(const Coord* p1, const Coord* p2, Coord anchor) {
