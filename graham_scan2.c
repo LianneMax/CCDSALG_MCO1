@@ -70,7 +70,7 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     // End timing and calculate elapsed time
     clock_t end = clock();
     double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Number of points: %6d, Execution time: %.6lf seconds\n", n, timeElapsed);
+    printf("Number of points: %6d \nExecution time: %.6lf seconds\n", n, timeElapsed);
 
     // Copy the stack contents to the result array for the convex hull
     *hullSize = s.top + 1;
