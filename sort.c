@@ -51,14 +51,7 @@ void selectSort(int n, Coord points[], Coord anchor) {
         swap(&points[i], &points[minIdx]);
     }
 }
-/*
-// Helper function to swap two points
-void swap(Coord* a, Coord* b) {
-    Coord temp = *a;
-    *a = *b;
-    *b = temp;
-}
-*/
+
 // Heapify function for Heap Sort
 // Ensures the max-heap property is maintained by comparing parent and child nodes based on polar angle
 void heapify(Coord points[], int n, int i, Coord anchor) {

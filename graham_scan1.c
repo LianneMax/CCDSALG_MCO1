@@ -5,8 +5,10 @@
 #include "stack.h"
 #include "sort.h"
 
+#define STEP  (1024)  // Increment for number of points
+#define LIMIT (32768) // Maximum number of points
+
 // Function to determine the orientation of three points
-// Returns 0 if points are collinear, 1 if clockwise, 2 if counterclockwise
 int orientation(Coord p, Coord q, Coord r) {
     // Calculate the cross product to determine orientation
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
@@ -21,7 +23,7 @@ int orientation(Coord p, Coord q, Coord r) {
     }
 }
 
-// Graham's Scan using Selection Sort
+// Graham's Scan with Selection Sort and empirical timing
 Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     int i;
 
@@ -32,7 +34,7 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
         return NULL;
     }
 
-    // Start timing for selection sort
+    // Start timing for selection sort and Graham’s scan
     clock_t start = clock();
 
     // Step 1: Find the anchor point with the lowest y-coordinate (leftmost if tied)
@@ -52,9 +54,10 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     // Step 2: Sort points by polar angle using selection sort
     selectSort(n, points, p0);
 
-    // End timing and print elapsed time
-    double timeElapsed = (double)(clock() - start) / CLOCKS_PER_SEC;
-    printf("Selection Sort took: %.6lf seconds\n", timeElapsed);
+    // End timing and calculate elapsed time
+    clock_t end = clock();
+    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Number of points: %6d, Execution time: %.6lf seconds\n", n, timeElapsed);
 
     // Step 3: Initialize the stack and add the first three points
     Stack s;
@@ -78,7 +81,6 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
         hull[i] = s.points[i];
     }
 
-    // Free stack memory and return the hull
     free(s.points);
     return hull;
 }
