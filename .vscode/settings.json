@@ -59,6 +59,10 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "stdio.h": "c",
-    "random": "cpp"
+    "random": "cpp",
+    "time.h": "c",
+    "stdlib.h": "c",
+    "stack.h": "c",
+    "sort.h": "c"
   }
 }

@@ -1,20 +1,20 @@
 // main2.c - Driver program for Graham's Scan with Heap Sort (Fast Version)
 #include <stdio.h>
-#include <stdlib.h>
 #include "stack.h"
 #include "sort.h"
 
+#define MaxPoints 32768  // Define a maximum number of points
+
 // Declare grahamScan2 so that main2.c can call it
 // grahamScan2 calculates the convex hull using heap sort
-Coord* grahamScan2(Coord points[], int n, int* hullSize);
+void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]);
 
 int main(int argc, char *argv[]) {
     int i; // Loop variable for iterating over points
 
     // Ensure that the program is run with exactly two arguments (input and output file names)
     if (argc != 3) {
-        printf("Usage: %s\n", argv[0]);
-        printf("Provide input and output file names.\n");
+        printf("Usage: %s <input file> <output file>\n", argv[0]);
         return 1;
     }
 
@@ -31,41 +31,36 @@ int main(int argc, char *argv[]) {
 
     // Read the number of points from the first line of the input file
     int n;
-    if (fscanf(input, "%d", &n) != 1) {
-        printf("Error reading the number of points.\n");
+    if (fscanf(input, "%d", &n) != 1 || n > MaxPoints) {
+        printf("Error: Invalid number of points or exceeds maximum allowed (%d).\n", MaxPoints);
         fclose(input); // Close input file before exiting due to read error
         return 1;
     }
 
-    // Allocate memory to store the points
-    Coord* points = (Coord*)malloc(n * sizeof(Coord));
-    if (points == NULL) {
-        printf("Memory allocation failed.\n");
-        fclose(input); // Close input file before exiting due to memory allocation error
-        return 1;
-    }
+    // Define static array for storing the points
+    Coord points[MaxPoints];
 
     // Read the x and y coordinates for each point
     for (i = 0; i < n; i++) {
         if (fscanf(input, "%lf %lf", &points[i].x, &points[i].y) != 2) {
             printf("Error reading coordinates for point %d.\n", i);
-            free(points); // Free allocated memory for points
             fclose(input); // Close input file before exiting due to read error
             return 1;
         }
     }
     fclose(input); // Close the input file after reading all points
 
-    // Calculate the convex hull using grahamScan2 (with heap sort) and store the result in hull
+    // Define static array for hull with maximum size as MaxPoints
+    Coord hull[MaxPoints];
     int hullSize; // Variable to store the number of points in the hull
-    Coord* hull = grahamScan2(points, n, &hullSize);
+
+    // Calculate the convex hull using grahamScan2 (with heap sort)
+    grahamScan2(points, n, &hullSize, hull);
 
     // Open the output file for writing
     FILE* output = fopen(outputFile, "w");
     if (!output) {
         printf("Error opening output file: %s\n", outputFile);
-        free(points); // Free dynamically allocated memory for points
-        free(hull);   // Free dynamically allocated memory for hull
         return 1;
     }
 
@@ -77,15 +72,11 @@ int main(int argc, char *argv[]) {
         fprintf(output,"%10.6lf  %10.6lf\n", hull[i].x, hull[i].y); // Fixed width for alignment
     }
 
-
     // Close the output file after writing all points
     fclose(output);
-
-    // Free dynamically allocated memory for points and hull arrays
-    free(points);
-    free(hull);
 
     // Inform the user that the convex hull has been written to the specified output file
     printf("Convex hull written to %s\n", outputFile);
     return 0;
 }
+

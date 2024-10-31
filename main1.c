@@ -1,8 +1,9 @@
 // main1.c - Driver program for Graham's Scan with Selection Sort (Slow Version)
 #include <stdio.h>
-#include <stdlib.h>
 #include "stack.h"
 #include "sort.h"
+
+#define MAX_POINTS 32768 // Define a maximum limit for points to avoid dynamic allocation
 
 // Declare grahamScan1 function so it can be used in main1.c
 // grahamScan1 calculates the convex hull using selection sort
@@ -31,14 +32,15 @@ int main(int argc, char *argv[]) {
     // Read the number of points from the first line of the input file
     int n;
     fscanf(input, "%d", &n);
-
-    // Allocate memory to store the points
-    Coord* points = (Coord*)malloc(n * sizeof(Coord));
-    if (points == NULL) {
-        printf("Memory allocation failed.\n");
-        fclose(input); // Close input file before exiting due to memory allocation error
+    if (n > MAX_POINTS) {
+        printf("Error: Number of points exceeds the maximum limit of %d.\n", MAX_POINTS);
+        fclose(input);
         return 1;
     }
+
+    // Define statically allocated arrays for points and hull
+    Coord points[MAX_POINTS];
+    Coord hull[MAX_POINTS];
 
     // Read the x and y coordinates for each point
     for (i = 0; i < n; i++) {
@@ -48,14 +50,22 @@ int main(int argc, char *argv[]) {
 
     // Calculate the convex hull using grahamScan1 (with selection sort) and store the result in hull
     int hullSize; // Variable to store the number of points in the hull
-    Coord* hull = grahamScan1(points, n, &hullSize);
+    Coord* hullResult = grahamScan1(points, n, &hullSize);
+
+    if (hullResult == NULL) {
+        printf("Error: Convex hull calculation failed.\n");
+        return 1;
+    }
+
+    // Copy hull result to the statically allocated hull array
+    for (i = 0; i < hullSize; i++) {
+        hull[i] = hullResult[i];
+    }
 
     // Open the output file for writing
     FILE* output = fopen(outputFile, "w");
     if (!output) {
         printf("Error opening output file: %s\n", outputFile);
-        free(points); // Free dynamically allocated memory for points
-        free(hull);   // Free dynamically allocated memory for hull
         return 1;
     }
 
@@ -64,15 +74,11 @@ int main(int argc, char *argv[]) {
 
     // Write each point in the convex hull to the output file with aligned decimals
     for (i = 0; i < hullSize; i++) {
-        fprintf(output,"%10.6lf  %10.6lf\n", hull[i].x, hull[i].y); // Fixed width for alignment
+        fprintf(output, "%10.6lf  %10.6lf\n", hull[i].x, hull[i].y); // Fixed width for alignment
     }
 
     // Close the output file after writing all points
     fclose(output);
-
-    // Free dynamically allocated memory for points and hull arrays
-    free(points);
-    free(hull);
 
     // Inform the user that the convex hull has been written to the specified output file
     printf("Convex hull written to %s\n", outputFile);
