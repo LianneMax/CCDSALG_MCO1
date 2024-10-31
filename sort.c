@@ -91,6 +91,6 @@ void heapSort(Coord points[], int n, Coord anchor) {
         // Move the root of the heap to the end of the sorted array
         swap(&points[0], &points[i]);
         // Call heapReorder on the reduced heap
-        heapreorder(points, i, 0, anchor);
+        heapReorder(points, i, 0, anchor);
     }
 }
