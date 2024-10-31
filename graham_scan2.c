@@ -39,11 +39,6 @@ void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]) {
     // Step 2: Sort points by polar angle with respect to the anchor point
     heapSort(points + 1, n - 1, p0);
 
-    // End timing and calculate elapsed time
-    clock_t end = clock();
-    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Number of points: %6d \nExecution time: %.6lf seconds\n", n, timeElapsed);
-
     // Step 3: Initialize the stack (using `hull` as the stack)
     Stack s;
     Create(&s);
@@ -64,6 +59,11 @@ void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]) {
     for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
+
+    // End timing and calculate elapsed time
+    clock_t end = clock();
+
+    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start));
 }
 
 

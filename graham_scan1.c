@@ -43,11 +43,6 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     // Sort points by polar angle using selection sort
     selectSort(n, points, p0);
 
-    // End timing and calculate elapsed time
-    clock_t end = clock();
-    double timeElapsed = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Number of points: %6d \nExecution time: %.6lf seconds\n", n, timeElapsed);
-
     // Initialize the stack and add the first three points
     Stack s;
     Create(&s);
@@ -69,6 +64,11 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
+
+    // End timing and calculate elapsed time
+    clock_t end = clock();
+
+    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start));
 
     return hull;
 }
