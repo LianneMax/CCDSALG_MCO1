@@ -17,7 +17,7 @@ void heapSort(Coord points[], int n, Coord anchor);
 
 // Helper function for heap sort: heapifies a subtree rooted at index i
 // Maintains the max-heap property with respect to the polar angle of points
-void heapify(Coord points[], int n, int i, Coord anchor);
+void heapReorder(Coord points[], int n, int i, Coord anchor);
 
 // Function to swap two points
 // Used by sorting algorithms to swap points based on polar angle ordering

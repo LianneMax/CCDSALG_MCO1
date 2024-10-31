@@ -52,9 +52,9 @@ void selectSort(int n, Coord points[], Coord anchor) {
     }
 }
 
-// Heapify function for Heap Sort
+// HeapReorder function for Heap Sort
 // Ensures the max-heap property is maintained by comparing parent and child nodes based on polar angle
-void heapify(Coord points[], int n, int i, Coord anchor) {
+void heapReorder(Coord points[], int n, int i, Coord anchor) {
     int largest = i;        // Assume the largest element is the root
     int left = 2 * i + 1;   // Index of left child
     int right = 2 * i + 2;  // Index of right child
@@ -69,10 +69,10 @@ void heapify(Coord points[], int n, int i, Coord anchor) {
         largest = right;
     }
 
-    // If largest is not the root, swap and recursively heapify the affected subtree
+    // If largest is not the root, swap and recursively heapReorder the affected subtree
     if (largest != i) {
         swap(&points[i], &points[largest]);
-        heapify(points, n, largest, anchor);
+        heapReorder(points, n, largest, anchor);
     }
 }
 
@@ -81,16 +81,16 @@ void heapify(Coord points[], int n, int i, Coord anchor) {
 void heapSort(Coord points[], int n, Coord anchor) {
     int i;  // Loop variable
 
-    // Build max-heap by calling heapify on all non-leaf nodes from the bottom up
+    // Build max-heap by calling heapReorder on all non-leaf nodes from the bottom up
     for (i = n / 2 - 1; i >= 0; i--) {
-        heapify(points, n, i, anchor);
+        heapReorder(points, n, i, anchor);
     }
 
     // Extract elements from the heap one by one and place them in sorted order
     for (i = n - 1; i > 0; i--) {
         // Move the root of the heap to the end of the sorted array
         swap(&points[0], &points[i]);
-        // Call heapify on the reduced heap
-        heapify(points, i, 0, anchor);
+        // Call heapReorder on the reduced heap
+        heapreorder(points, i, 0, anchor);
     }
 }
