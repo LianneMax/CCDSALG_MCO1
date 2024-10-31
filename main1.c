@@ -3,7 +3,7 @@
 #include "stack.h"
 #include "sort.h"
 
-#define MAX_POINTS 32768 // Define a maximum limit for points to avoid dynamic allocation
+#define MaxPoints 32768  // Define a maximum number of points
 
 // Declare grahamScan1 function so it can be used in main1.c
 // grahamScan1 calculates the convex hull using selection sort
@@ -31,20 +31,24 @@ int main(int argc, char *argv[]) {
 
     // Read the number of points from the first line of the input file
     int n;
-    fscanf(input, "%d", &n);
-    if (n > MAX_POINTS) {
-        printf("Error: Number of points exceeds the maximum limit of %d.\n", MAX_POINTS);
-        fclose(input);
+    if (fscanf(input, "%d", &n) != 1 || n > MaxPoints) {
+        printf("Error: Invalid number of points or exceeds maximum allowed (%d).\n", MaxPoints);
+        fclose(input); // Close input file before exiting due to read error
         return 1;
     }
-
-    // Define statically allocated arrays for points and hull
-    Coord points[MAX_POINTS];
-    Coord hull[MAX_POINTS];
+    
+    // Define static array for storing the points
+    Coord points[MaxPoints];
+    // Define static array for hull with maximum size as MaxPoints
+    Coord hull[MaxPoints];
 
     // Read the x and y coordinates for each point
     for (i = 0; i < n; i++) {
-        fscanf(input, "%lf %lf", &points[i].x, &points[i].y);
+        if (fscanf(input, "%lf %lf", &points[i].x, &points[i].y) != 2) {
+            printf("Error reading coordinates for point %d.\n", i);
+            fclose(input); // Close input file before exiting due to read error
+            return 1;
+        }
     }
     fclose(input); // Close the input file after reading all points
 

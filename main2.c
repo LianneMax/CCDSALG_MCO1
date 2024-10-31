@@ -39,6 +39,8 @@ int main(int argc, char *argv[]) {
 
     // Define static array for storing the points
     Coord points[MaxPoints];
+    // Define static array for hull with maximum size as MaxPoints
+    Coord hull[MaxPoints];
 
     // Read the x and y coordinates for each point
     for (i = 0; i < n; i++) {
@@ -50,11 +52,8 @@ int main(int argc, char *argv[]) {
     }
     fclose(input); // Close the input file after reading all points
 
-    // Define static array for hull with maximum size as MaxPoints
-    Coord hull[MaxPoints];
+    // Calculate the convex hull using grahamScan2 (with heap sort) and store the result in hull
     int hullSize; // Variable to store the number of points in the hull
-
-    // Calculate the convex hull using grahamScan2 (with heap sort)
     grahamScan2(points, n, &hullSize, hull);
 
     // Open the output file for writing
