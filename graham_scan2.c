@@ -1,9 +1,9 @@
-// graham_scan2.c - Graham's Scan with Heap Sort (Fast Version)
 #include <stdio.h>
 #include <time.h>
 #include "stack.h"
 #include "sort.h"
 
+// Helper function to determine orientation
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
     return (val == 0) ? 0 : (val > 0) ? 1 : 2;
@@ -39,19 +39,19 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     // Step 2: Sort points by polar angle with respect to the anchor point
     heapSort(points + 1, n - 1, p0);
 
-    // Step 3: Initialize the stack (using `hull` as the stack)
+    // Step 3: Initialize the stack
     Stack s;
-    Create(&s);
-    Push(&s, points[0]);
+    Create(&s);                  // Initialize the stack
+    Push(&s, points[0]);         // Push the first three points
     Push(&s, points[1]);
     Push(&s, points[2]);
 
     // Step 4: Process remaining points to construct the convex hull
     for (x = 3; x < n; x++) {
         while (s.top >= 1 && orientation(*NextToTop(&s), *Top(&s), points[x]) != 2) {
-            Pop(&s);
+            Pop(&s);             // Remove the top point if it makes a non-left turn
         }
-        Push(&s, points[x]);
+        Push(&s, points[x]);     // Push the current point onto the stack
     }
 
     // Copy the stack contents to the result array for the convex hull
@@ -64,7 +64,7 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     // End timing and calculate elapsed time
     clock_t end = clock();
 
-    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start));
+    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start) * 1000.0 / CLOCKS_PER_SEC);
 
     return hull;
 }
