@@ -42,15 +42,24 @@ int main(int argc, char *argv[]) {
     // Define static array for hull with maximum size as MaxPoints
     Coord hull[MaxPoints];
 
-    // Read the x and y coordinates for each point
-    for (i = 0; i < n; i++) {
-        if (fscanf(input, "%lf %lf", &points[i].x, &points[i].y) != 2) {
-            printf("Error reading coordinates for point %d.\n", i);
-            fclose(input); // Close input file before exiting due to read error
+    int actualCount = 0; // Track actual number of coordinates read
+
+    // Read the x and y coordinates for each point and count them
+    while (fscanf(input, "%lf %lf", &points[actualCount].x, &points[actualCount].y) == 2) {
+        actualCount++;
+        if (actualCount > MaxPoints) {
+            printf("Error: Number of points exceeds maximum allowed (%d).\n", MaxPoints);
+            fclose(input);
             return 1;
         }
     }
-    fclose(input); // Close the input file after reading all points
+    fclose(input); // Close input file after reading all points
+
+    // Check if the actual count matches the initial value of n
+    if (actualCount != n) {
+        printf("Error: The specified number of points (%d) does not match the actual count of coordinates read (%d).\n", n, actualCount);
+        return 1;
+    }
 
     // Calculate the convex hull using grahamScan1 (with selection sort) and store the result in hull
     int hullSize; // Variable to store the number of points in the hull
