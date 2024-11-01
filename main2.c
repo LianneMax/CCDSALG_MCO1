@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-int n;
+    // Read the number of points from the first line of the input file
+    int n;
     if (fscanf(input, "%d", &n) != 1 || n > MaxPoints) {
         printf("Error: Invalid number of points or exceeds maximum allowed (%d).\n", MaxPoints);
         fclose(input); // Close input file before exiting due to read error
@@ -37,8 +38,6 @@ int n;
     
     // Define static array for storing the points
     Coord points[MaxPoints];
-    // Define static array for hull with maximum size as MaxPoints
-    Coord hull[MaxPoints];
 
     int actualCount = 0; // Track actual number of coordinates read
 
@@ -59,7 +58,7 @@ int n;
         return 1;
     }
 
-    // Calculate the convex hull using grahamScan2 (with heap sort) and store the result in hull
+    // Calculate the convex hull using grahamScan2 (with heap sort)
     int hullSize; // Variable to store the number of points in the hull
     Coord* hullResult = grahamScan2(points, n, &hullSize);
 
@@ -82,8 +81,11 @@ int n;
     for (i = 0; i < hullSize; i++) {
         fprintf(output,"%10.6lf  %10.6lf\n", hullResult[i].x, hullResult[i].y); // Fixed width for alignment
     }
+
+    // Close the output file after writing all points
     fclose(output);
 
+    // Inform the user that the convex hull has been written to the specified output file
     printf("Convex hull written to %s\n", outputFile);
     return 0;
 }

@@ -5,8 +5,7 @@
 
 #define MaxPoints 32768  // Define a maximum number of points
 
-// Declare grahamScan1 function so it can be used in main1.c
-// grahamScan1 calculates the convex hull using selection sort
+// Declare grahamScan1 so that main1.c can call it
 Coord* grahamScan1(Coord points[], int n, int* hullSize);
 
 int main(int argc, char *argv[]) {
@@ -39,8 +38,6 @@ int main(int argc, char *argv[]) {
     
     // Define static array for storing the points
     Coord points[MaxPoints];
-    // Define static array for hull with maximum size as MaxPoints
-    Coord hull[MaxPoints];
 
     int actualCount = 0; // Track actual number of coordinates read
 
@@ -70,11 +67,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Copy hull result to the statically allocated hull array
-    for (i = 0; i < hullSize; i++) {
-        hull[i] = hullResult[i];
-    }
-
     // Open the output file for writing
     FILE* output = fopen(outputFile, "w");
     if (!output) {
@@ -87,7 +79,7 @@ int main(int argc, char *argv[]) {
 
     // Write each point in the convex hull to the output file with aligned decimals
     for (i = 0; i < hullSize; i++) {
-        fprintf(output, "%10.6lf  %10.6lf\n", hull[i].x, hull[i].y); // Fixed width for alignment
+        fprintf(output, "%10.6lf  %10.6lf\n", hullResult[i].x, hullResult[i].y);
     }
 
     // Close the output file after writing all points
@@ -97,4 +89,3 @@ int main(int argc, char *argv[]) {
     printf("Convex hull written to %s\n", outputFile);
     return 0;
 }
-

@@ -1,14 +1,19 @@
+// graham_scan2.c - Graham's Scan with Heap Sort (Fast Version) using fixed-size stack
 #include <stdio.h>
 #include <time.h>
 #include "stack.h"
 #include "sort.h"
 
-// Helper function to determine orientation
+// Function to determine the orientation of three points
 int orientation(Coord p, Coord q, Coord r) {
     double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-    return (val == 0) ? 0 : (val > 0) ? 1 : 2;
+
+    if (val == 0) return 0;        // Collinear
+    else if (val > 0) return 1;    // Clockwise
+    else return 2;                 // Counterclockwise
 }
 
+// Graham's Scan with Heap Sort
 Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     int i, x;
 
@@ -21,11 +26,10 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     // Start timing for heap sort and Graham’s scan
     clock_t start = clock();
 
-    // Step 1: Find the anchor point with the lowest y-coordinate
+    // Find the anchor point with the lowest y-coordinate
     int minY = 0;
     for (i = 1; i < n; i++) {
-        if (points[i].y < points[minY].y || 
-           (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
+        if (points[i].y < points[minY].y || (points[i].y == points[minY].y && points[i].x < points[minY].x)) {
             minY = i;
         }
     }
