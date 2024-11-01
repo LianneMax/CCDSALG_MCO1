@@ -7,7 +7,7 @@
 
 // Declare grahamScan2 so that main2.c can call it
 // grahamScan2 calculates the convex hull using heap sort
-void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]);
+Coord* grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]);
 
 int main(int argc, char *argv[]) {
     int i; // Loop variable for iterating over points
@@ -54,7 +54,12 @@ int main(int argc, char *argv[]) {
 
     // Calculate the convex hull using grahamScan2 (with heap sort) and store the result in hull
     int hullSize; // Variable to store the number of points in the hull
-    grahamScan2(points, n, &hullSize, hull);
+    Coord* hullResult = grahamScan2(points, n, &hullSize, hull);
+
+    if (hullResult == NULL) {
+        printf("Error: Convex hull calculation failed.\n");
+        return 1;
+    }
 
     // Open the output file for writing
     FILE* output = fopen(outputFile, "w");

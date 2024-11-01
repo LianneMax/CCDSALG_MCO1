@@ -9,13 +9,13 @@ int orientation(Coord p, Coord q, Coord r) {
     return (val == 0) ? 0 : (val > 0) ? 1 : 2;
 }
 
-void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]) {
+Coord* grahamScan2(Coord points[], int n, int* hullSize) {
     int i, x;
 
     if (n < 3) {
         printf("Convex hull is not possible with less than 3 points.\n");
         *hullSize = 0;
-        return;
+        return NULL;
     }
 
     // Start timing for heap sort and Graham’s scan
@@ -54,8 +54,9 @@ void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]) {
         Push(&s, points[x]);
     }
 
-    // Copy the stack contents into hull
+    // Copy the stack contents to the result array for the convex hull
     *hullSize = s.top + 1;
+    static Coord hull[MaxStack]; // Fixed-size array for hull storage
     for (i = 0; i < *hullSize; i++) {
         hull[i] = s.points[i];
     }
@@ -64,6 +65,6 @@ void grahamScan2(Coord points[], int n, int* hullSize, Coord hull[]) {
     clock_t end = clock();
 
     printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start));
+
+    return hull;
 }
-
-
