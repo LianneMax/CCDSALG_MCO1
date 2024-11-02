@@ -68,7 +68,7 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
     // End timing and calculate elapsed time
     clock_t end = clock();
 
-    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start));
+    printf("Number of points: %6d \nExecution time: %.6lf milliseconds\n", n, (double)(end - start) * 1000.0 / CLOCKS_PER_SEC);
 
     return hull;
 }
