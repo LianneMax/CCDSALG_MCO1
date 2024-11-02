@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Calculate the convex hull using grahamScan1 (with selection sort) and store the result in hull
+    // Calculate the convex hull using grahamScan1 (with selection sort)
     int hullSize; // Variable to store the number of points in the hull
     Coord* hullResult = grahamScan1(points, n, &hullSize);
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 
     // Write each point in the convex hull to the output file with aligned decimals
     for (i = 0; i < hullSize; i++) {
-        fprintf(output, "%10.6lf  %10.6lf\n", hullResult[i].x, hullResult[i].y);
+        fprintf(output,"%10.6lf  %10.6lf\n", hullResult[i].x, hullResult[i].y); // Fixed width for alignment
     }
 
     // Close the output file after writing all points
