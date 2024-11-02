@@ -45,17 +45,17 @@ Coord* grahamScan1(Coord points[], int n, int* hullSize) {
 
     // Initialize the stack and add the first three points
     Stack s;
-    Create(&s);
-    Push(&s, points[0]);
+    Create(&s);                  // Initialize the stack
+    Push(&s, points[0]);         // Push the first three points
     Push(&s, points[1]);
     Push(&s, points[2]);
 
     // Process remaining points
     for (i = 3; i < n; i++) {
         while (s.top >= 1 && orientation(*NextToTop(&s), *Top(&s), points[i]) != 2) {
-            Pop(&s);
+            Pop(&s);             // Remove the top point if it makes a non-left turn
         }
-        Push(&s, points[i]);
+        Push(&s, points[i]);     // Push the current point onto the stack
     }
 
     // Copy the stack contents to the result array for the convex hull

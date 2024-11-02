@@ -34,23 +34,23 @@ Coord* grahamScan2(Coord points[], int n, int* hullSize) {
         }
     }
 
-    // Place anchor point at first position
+    // Move the anchor point to the first position
     Coord temp = points[0];
     points[0] = points[minY];
     points[minY] = temp;
     Coord p0 = points[0];
 
-    // Step 2: Sort points by polar angle with respect to the anchor point
+    // Sort points by polar angle using selection sort
     heapSort(points + 1, n - 1, p0);
 
-    // Step 3: Initialize the stack
+    // Initialize the stack and add the first three points
     Stack s;
     Create(&s);                  // Initialize the stack
     Push(&s, points[0]);         // Push the first three points
     Push(&s, points[1]);
     Push(&s, points[2]);
 
-    // Step 4: Process remaining points to construct the convex hull
+    // Process remaining points
     for (x = 3; x < n; x++) {
         while (s.top >= 1 && orientation(*NextToTop(&s), *Top(&s), points[x]) != 2) {
             Pop(&s);             // Remove the top point if it makes a non-left turn
